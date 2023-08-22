@@ -8,7 +8,6 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     posts: [],
-    commentaries: [],
   },
   mutations: {
     addPost(state, post) {
@@ -19,14 +18,11 @@ const store = new Vuex.Store({
       existing_posts.push(post);
       localStorage.setItem("posts", JSON.stringify(existing_posts));
     },
-    updatedPosts(state, post) {
-      state.posts.push(post);
-      const posts_arr = localStorage.getItem("posts");
-      const existing_posts = posts_arr ? JSON.parse(posts_arr) : [];
-      existing_posts.push(post);
-      localStorage.setItem("updatedPosts", JSON.stringify(existing_posts));
-    },
   },
 });
 
-new Vue({ store: store, router, render: (h) => h(App) }).$mount("#app");
+new Vue({
+  store: store,
+  router,
+  render: (h) => h(App),
+}).$mount("#app");

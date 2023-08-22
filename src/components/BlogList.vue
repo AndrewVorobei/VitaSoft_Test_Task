@@ -13,12 +13,7 @@
     </p>
     <main class="main">
       <div class="posts_list">
-        <div
-          class="new_post"
-          v-for="post in posts"
-          :key="post.id"
-          @click="open_post(post)"
-        >
+        <div class="new_post" v-for="post in posts" :key="post.id">
           <router-link :to="'/post/' + post.id" class="post_info">
             <h1 class="post_header">
               {{ post.name }}
@@ -56,9 +51,6 @@ export default {
     remove_post(post) {
       this.posts = this.posts.filter((el) => el.id !== post.id);
       localStorage.setItem("posts", JSON.stringify(this.posts));
-    },
-    open_post(post) {
-      this.$router.push({ name: "post", params: { id: post.id } });
     },
 
     reverseDate(date) {
@@ -189,7 +181,6 @@ export default {
             font-style: normal;
             font-size: 16px;
             font-weight: 700;
-            line-height: 16px;
           }
 
           .post_footer {

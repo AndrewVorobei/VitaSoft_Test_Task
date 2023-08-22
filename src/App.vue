@@ -8,6 +8,6 @@
 
 <style scoped>
 #app {
-  width: 50%;
+  width: 60%;
 }
 </style>

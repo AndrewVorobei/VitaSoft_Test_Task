@@ -27,50 +27,39 @@
         <p class="adding_date">
           {{ reverseDate(post.date) }}
         </p>
+        <button class="commentaries_value" @click="commentariesToggler">
+          Комментарии
+        </button>
         <button class="edit_btn" @click="editPost">Редактировать пост</button>
-        <p class="commentaries_value"></p>
         <router-link :to="{ name: 'blog-list' }">
           <button class="back_to_blog">Вернуться к постам</button>
         </router-link>
       </div>
     </div>
-    <!-- <div class="edit_post" v-if="editing">
-      <h2 class="edit_header">Редактирование поста</h2>
-      <form class="edit_form" @submit.prevent="saveEdit">
-        <div class="edit_name_section">
-          <label class="">Заголовок:</label>
-          <input v-model="editedPost.name" required />
-        </div>
-        <div class="edit_intro_section">
-          <label>Краткое описание:</label>
-          <textarea v-model="editedPost.intro" required></textarea>
-        </div>
-        <div class="edit_description_section">
-          <label>Описание поста:</label>
-          <textarea v-model="editedPost.description" required></textarea>
-        </div>
-        <button type="submit">Сохранить изменения</button>
-      </form>
-    </div> -->
+
     <updatePost
       v-if="editing"
       :edited-post="editedPost"
       @save-edit="handleSaveEdit"
     >
     </updatePost>
+
+    <CommentsField v-if="commentaries" :post-id="post.id"> </CommentsField>
   </div>
 </template>
 
 <script>
+import CommentsField from "../views/CommentsFiled.vue";
 import updatePost from "../components/updatePost.vue";
 
 export default {
-  components: { updatePost },
+  components: { updatePost, CommentsField },
   data() {
     return {
       posts: JSON.parse(localStorage.getItem("posts")),
       post: {},
       editing: false,
+      commentaries: false,
       editedPost: {},
     };
   },
@@ -85,8 +74,17 @@ export default {
       return `${parts[2]}.${parts[1]}.${parts[0]}`;
     },
     editPost() {
-      this.editing = true;
+      this.editing = !this.editing;
+      this.commentaries = false;
       this.editedPost = { ...this.post };
+    },
+
+    commentariesToggler() {
+      if (this.commentaries === false) {
+        this.commentaries = true;
+      } else {
+        this.commentaries = false;
+      }
     },
 
     handleSaveEdit(editedPost) {

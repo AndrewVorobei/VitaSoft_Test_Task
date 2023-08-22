@@ -15,7 +15,7 @@
               @input="handleTextareaInput('name')"
             ></textarea>
             <span class="character_count">
-              Максимум {{ characters_value.name }} символов
+              Обязательное поле. Максимум {{ characters_value.name }} символов
             </span>
           </div>
           <hr class="hr" />
@@ -31,7 +31,7 @@
               @input="handleTextareaInput('intro')"
             ></textarea>
             <span class="character_count">
-              Максимум {{ characters_value.intro }} символов
+              Обязательное поле. Максимум {{ characters_value.intro }} символов
             </span>
           </div>
           <hr class="hr" />
@@ -75,6 +75,7 @@ export default {
         intro: "",
         description: "",
         id: Math.floor(Math.random() * 10000),
+        comments: [],
       },
 
       characters_value: {
@@ -107,6 +108,9 @@ export default {
       }
     },
     save_post() {
+      if (this.newPost.name.trim() === "" || this.newPost.intro.trim() === "") {
+        return;
+      }
       this.newPost.date = this.currentDate;
       this.$store.commit("addPost", this.newPost);
       this.$router.push({ name: "blog-list" });
@@ -116,6 +120,7 @@ export default {
         description: "",
         id: "",
         date: "",
+        comments: [],
       };
     },
   },
